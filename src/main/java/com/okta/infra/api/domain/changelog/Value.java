@@ -1,6 +1,8 @@
 package com.okta.infra.api.domain.changelog;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,8 @@ public class Value implements Serializable
     private String id;
     private Author author;
     private String created;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd'T'HH:mm:ss.SSSZ" );
+    private LocalDateTime createdDate;
     private List<Item> items = null;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
     private final static long serialVersionUID = 233119548472219318L;
@@ -55,4 +59,7 @@ public class Value implements Serializable
         this.additionalProperties.put(name, value);
     }
 
+    public LocalDateTime getCreatedDate() {
+        return LocalDateTime.parse(this.created, formatter);
+    }
 }
